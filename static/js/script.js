@@ -14,7 +14,7 @@ app.controller('DevicesController', function($scope, $http) {
     };
 
     function update() {
-        $http.get('/devs.json').success(function(data) {
+        $http.get('/devices.json').success(function(data) {
             $scope.devices = data.devices;
         });
     }

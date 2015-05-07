@@ -29,9 +29,9 @@ def log():
     return render_template('log.html', log=log)
 
 # json
-@app.route('/devs.json')
-def devs():
-    with open('json/devs.json') as f:
+@app.route('/devices.json')
+def devices():
+    with open('json/edevs.json') as f:
         data = json.load(f)
 
     response = {
