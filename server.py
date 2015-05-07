@@ -5,6 +5,14 @@ from flask import Flask, render_template, jsonify
 app = Flask(__name__)
 app.debug = True
 
+def edevs():
+    with open('json/edevs.json') as f:
+        return json.load(f)
+
+def estats():
+    with open('json/estats.json') as f:
+        return json.load(f)
+
 @app.route('/')
 def status():
     return render_template('status.html')
@@ -31,15 +39,20 @@ def log():
 # json
 @app.route('/devices.json')
 def devices():
-    with open('json/edevs.json') as f:
-        data = json.load(f)
+    data = {
+        'edevs': edevs(),
+        'estats': estats()
+    }
 
     response = {
         'status': 'success',
         'devices': []
     }
 
-    for dev in data['DEVS']:
+    for i in xrange(0, len(data['edevs']['DEVS'])):
+        dev = data['edevs']['DEVS'][i]
+        stat = data['estats']['STATS'][i]
+
         response['devices'].append({
             'id': dev['ID'],
             'name': dev['Name'],
@@ -47,7 +60,10 @@ def devices():
             'ghs': dev['MHS 5s'] / 1000,
             'temperature': dev['Temperature'],
             'accepted': dev['Accepted'],
-            'rejected': dev['Rejected']
+            'rejected': dev['Rejected'],
+            'clockrate': stat['base clockrate'],
+            'fan': stat['fan percent'],
+            'voltage': stat['Asic0 voltage 0']
         })
 
     return jsonify(response)
