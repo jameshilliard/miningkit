@@ -5,6 +5,10 @@ from flask import Flask, render_template, jsonify
 app = Flask(__name__)
 app.debug = True
 
+def cgsummary():
+    with open('json/summary.json') as f:
+        return json.load(f)
+
 def edevs():
     with open('json/edevs.json') as f:
         return json.load(f)
@@ -65,6 +69,26 @@ def devices():
             'fan': stat['fan percent'],
             'voltage': stat['Asic0 voltage 0']
         })
+
+    return jsonify(response)
+
+@app.route('/summary.json')
+def summary():
+    data = cgsummary()
+
+    total = data['SUMMARY'][0]['Accepted'] + data['SUMMARY'][0]['Rejected']
+    accepted_percent = data['SUMMARY'][0]['Accepted'] / total * 100
+    rejected_percent = data['SUMMARY'][0]['Rejected'] / total * 100
+
+    response = {
+        'status': 'success',
+        'summary': {
+            'accepted': data['SUMMARY'][0]['Accepted'],
+            'rejected': data['SUMMARY'][0]['Rejected'],
+            'accepted_percent': accepted_percent,
+            'rejected_percent': rejected_percent
+        }
+    }
 
     return jsonify(response)
 
