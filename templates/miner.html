@@ -1,5 +1,84 @@
 {% extends 'layouts/dashboard.html' %}
 
 {% block content %}
-<h1>Miner config will be here</h1>
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>Pool Config</h5>
+    </div>
+    <div class="ibox-content">
+        <form role="form" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">URL</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="stratum+tcp://uk1.ghash.io:3333">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="kamillo.worker1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" value="qwerty">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Priority</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" value="1">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button class="btn btn-danger">Remove pool</button>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">URL</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Priority</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button type="button" class="btn btn-danger">Remove pool</button>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button type="button" class="btn btn-white">Add new pool</button>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
