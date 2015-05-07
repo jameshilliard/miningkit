@@ -1,6 +1,7 @@
+import os
 from flask import Flask, render_template
-app = Flask(__name__)
 
+app = Flask(__name__)
 app.debug = True
 
 @app.route('/')
@@ -21,7 +22,10 @@ def alerts():
 
 @app.route('/log')
 def log():
-    return render_template('log.html')
+    with os.popen('tail /var/log/boot.log -n 30') as f:
+        log = f.read()
+
+    return render_template('log.html', log=log)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
