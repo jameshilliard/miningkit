@@ -53,115 +53,119 @@
     </div>
 </div>
 
-<div class="jumbotron">
-    <p class="text-center">No devices were detected</p>
-</div>
+<div ng-controller="DevicesController">
+    <div class="jumbotron" ng-show="devices === null">
+        <p class="text-center">Searching for devices...</p>
+    </div>
 
-<div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">HFB0 0036</a></li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">HFB1 0124</a></li>
-    </ul>
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="home">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="widget style1 navy-bg">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <i class="fa fa-rocket fa-5x"></i>
+    <div class="jumbotron" ng-show="devices.length === 0">
+        <p class="text-center">No devices were detected</p>
+    </div>
+
+    <div role="tabpanel" ng-show="devices.length">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" ng-repeat="device in devices" ng-class="{active: selectedTab === $index}">
+                <a href="#device{[ $index ]}" aria-controls="device{[ $index ]}" role="tab" data-toggle="tab" ng-click="selectTab($index)">{[ device.name ]} {[ device.id ]}</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane" id="device{[ $index ]}" ng-repeat="device in devices" ng-class="{active: selectedTab === $index}">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="widget style1 navy-bg">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-rocket fa-5x"></i>
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <span> Hashrate </span>
+                                    <h2 class="font-bold">{[ device.ghs.toFixed(2) ]} GHs</h2>
+                                </div>
                             </div>
-                            <div class="col-xs-8 text-right">
-                                <span> Hashrate </span>
-                                <h2 class="font-bold">455 GHs</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="widget style1 navy-bg">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-tachometer fa-5x"></i>
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <span>Temperature</span>
+                                    <h2 class="font-bold">{[ device.temperature ]}'C</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="widget style1 navy-bg">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-thumbs-up fa-5x"></i>
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <span>Accepted</span>
+                                    <h2 class="font-bold">{[ device.accepted ]}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="widget style1 navy-bg">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-recycle fa-5x"></i>
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <span>Rejected</span>
+                                    <h2 class="font-bold">{[ device.rejected ]}</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="widget style1 navy-bg">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <i class="fa fa-tachometer fa-5x"></i>
-                            </div>
-                            <div class="col-xs-8 text-right">
-                                <span>Temperature</span>
-                                <h2 class="font-bold">86'C</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="widget style1 navy-bg">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <i class="fa fa-thumbs-up fa-5x"></i>
-                            </div>
-                            <div class="col-xs-8 text-right">
-                                <span>Accepted</span>
-                                <h2 class="font-bold">5855</h2>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="widget style1 ibox-content">
+                            <div class="row vertical-align">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-clock-o fa-3x has-success"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <h3 class="font-bold">650 MHS</h3>
+                                    <span>ClockRate</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="widget style1 navy-bg">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <i class="fa fa-recycle fa-5x"></i>
+                    <div class="col-lg-2">
+                        <div class="widget style1 ibox-content">
+                            <div class="row vertical-align">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-bolt fa-3x has-success"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <h3 class="font-bold">0.78 V</h3>
+                                    <span>Voltage</span>
+                                </div>
                             </div>
-                            <div class="col-xs-8 text-right">
-                                <span> Rejected </span>
-                                <h2 class="font-bold">3</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="widget style1 ibox-content">
+                            <div class="row vertical-align">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-circle fa-3x has-success"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <h3 class="font-bold">85 %</h3>
+                                    <span>Fan Speed</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="widget style1 ibox-content">
-                        <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="fa fa-clock-o fa-3x has-success"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <h3 class="font-bold">650 MHS</h3>
-                                <span>ClockRate</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="widget style1 ibox-content">
-                        <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="fa fa-bolt fa-3x has-success"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <h3 class="font-bold">0.78 V</h3>
-                                <span>Voltage</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="widget style1 ibox-content">
-                        <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="fa fa-circle fa-3x has-success"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <h3 class="font-bold">85 %</h3>
-                                <span>Fan Speed</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="profile">
-            Same as HFB0 0036
         </div>
     </div>
 </div>

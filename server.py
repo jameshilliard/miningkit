@@ -1,5 +1,6 @@
 import os
-from flask import Flask, render_template
+import json
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 app.debug = True
@@ -26,6 +27,30 @@ def log():
         log = f.read()
 
     return render_template('log.html', log=log)
+
+# json
+@app.route('/devs.json')
+def devs():
+    with open('json/devs.json') as f:
+        data = json.load(f)
+
+    response = {
+        'status': 'success',
+        'devices': []
+    }
+
+    for dev in data['DEVS']:
+        response['devices'].append({
+            'id': dev['ID'],
+            'name': dev['Name'],
+            'mhs': dev['MHS 5s'],
+            'ghs': dev['MHS 5s'] / 1000,
+            'temperature': dev['Temperature'],
+            'accepted': dev['Accepted'],
+            'rejected': dev['Rejected']
+        })
+
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
