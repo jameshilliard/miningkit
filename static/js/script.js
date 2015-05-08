@@ -1,4 +1,4 @@
-var app = angular.module('miningkit', [])
+var app = angular.module('miningkit', []);
 
 app.config(['$interpolateProvider', function($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
