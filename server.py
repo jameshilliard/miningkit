@@ -1,18 +1,22 @@
 from __future__ import division
 import os
 import json
+import random
 from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 app.debug = True
 
-hashrates = [
-    [318.26, 418.26],
-    [338.26, 448.26],
-    [308.26, 388.26],
-    [348.26, 488.26],
-    [218.26, 378.26]
-]
+def random_line(size):
+    return [random.randrange(1, 100) for x in xrange(1, size + 1)]
+
+def random_lines(line_size):
+    lines = []
+
+    for i in xrange(1, random.randint(2, 4)):
+        lines.append(random_line(line_size))
+
+    return lines
 
 def cgsummary():
     with open('json/summary.json') as f:
@@ -111,6 +115,13 @@ def summary():
     }
 
     return jsonify(response)
+
+@app.route('/chart.js')
+def chart():
+    return jsonify({
+        'status': 'success',
+        'lines': random_lines(7)
+    })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
