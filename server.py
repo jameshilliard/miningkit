@@ -9,6 +9,10 @@ def cgsummary():
     with open('json/summary.json') as f:
         return json.load(f)
 
+def pools():
+    with open('json/pools.json') as f:
+        return json.load(f)
+
 def edevs():
     with open('json/edevs.json') as f:
         return json.load(f)
@@ -75,6 +79,7 @@ def devices():
 @app.route('/summary.json')
 def summary():
     data = cgsummary()
+    pools_data = pools()
 
     total = data['SUMMARY'][0]['Accepted'] + data['SUMMARY'][0]['Rejected']
     accepted_percent = data['SUMMARY'][0]['Accepted'] / total * 100
@@ -83,10 +88,16 @@ def summary():
     response = {
         'status': 'success',
         'summary': {
+            'mhs': data['SUMMARY'][0]['MHS 5s'],
+            'ghs': data['SUMMARY'][0]['MHS 5s'] / 1000,
             'accepted': data['SUMMARY'][0]['Accepted'],
             'rejected': data['SUMMARY'][0]['Rejected'],
             'accepted_percent': accepted_percent,
-            'rejected_percent': rejected_percent
+            'rejected_percent': rejected_percent,
+            'pool': {
+                'url': pools_data['POOLS'][0]['URL'],
+                'user': pools_data['POOLS'][0]['User']
+            }
         }
     }
 

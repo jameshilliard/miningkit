@@ -5,6 +5,17 @@ app.config(['$interpolateProvider', function($interpolateProvider) {
     $interpolateProvider.endSymbol(']}');
 }]);
 
+app.controller('SummaryController', function($scope, $http) {
+    function update() {
+        $http.get('/summary.json').success(function(data) {
+            $scope.summary = data.summary;
+        });
+    }
+
+    update();
+    setInterval(update, 5000);
+});
+
 app.controller('DevicesController', function($scope, $http) {
     $scope.devices = null;
     $scope.selectedTab = 0;

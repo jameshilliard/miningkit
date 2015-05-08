@@ -13,39 +13,39 @@
                     <canvas id="lineChart" height="232" width="997" style="width: 997px; height: 232px;"></canvas>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="widget style1 navy-bg">
+            <div class="col-lg-4" ng-controller="SummaryController">
+                <div class="widget style1 navy-bg" ng-show="summary.ghs">
                     <div class="row">
                         <div class="col-xs-4">
                             <i class="fa fa-rocket fa-5x"></i>
                         </div>
                         <div class="col-xs-8 text-right">
-                            <span> Total HashRate </span>
-                            <h2 class="font-bold">1050 Ghs</h2>
+                            <span>Total Hashrate</span>
+                            <h2 class="font-bold">{[ summary.ghs.toFixed(2) ]} GHs</h2>
                         </div>
                     </div>
                 </div>
-                <div>
+                <div ng-show="summary.accepted">
                     <div>
                         <span>Accepted</span>
-                        <small class="pull-right">15855</small>
+                        <small class="pull-right">{[ summary.accepted ]}</small>
                     </div>
                     <div class="progress progress-small">
-                        <div style="width: 60%;" class="progress-bar"></div>
+                        <div style="width: {[ summary.accepted_percent ]}%;" class="progress-bar"></div>
                     </div>
                     <div>
                         <span>Rejected</span>
-                        <small class="pull-right">14</small>
+                        <small class="pull-right">{[ summary.rejected ]}</small>
                     </div>
                     <div class="progress progress-small">
-                        <div style="width: 14%;" class="progress-bar progress-bar-danger"></div>
+                        <div style="width: {[ summary.rejected_percent ]}%;" class="progress-bar progress-bar-danger"></div>
                     </div>
-                    <div class="widget-text-box">
+                    <div class="widget-text-box" ng-show="summary.pool">
                        <span>
                             <i class="fa fa-circle green"></i>
-                            Current pool: <strong>stratum+tcp://uk1.ghash.io:3333</strong>
+                            Current pool: <strong>{[ summary.pool.url ]}</strong>
                         </span>
-                        <small class="pull-right">kamillo.worker1</small>
+                        <small class="pull-right">{[ summary.pool.user ]}</small>
                     </div>
                 </div>
             </div>
