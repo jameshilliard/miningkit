@@ -117,9 +117,6 @@ def chart():
 
     now = time.time()
 
-    print now
-    print chart_asked
-
     if (now - chart_asked) > 60 * 5:
         line_chart.append([random.randint(200, 400), random.randint(200, 400)]);
         chart_asked = now
