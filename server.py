@@ -1,9 +1,18 @@
+from __future__ import division
 import os
 import json
 from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 app.debug = True
+
+hashrates = [
+    [318.26, 418.26],
+    [338.26, 448.26],
+    [308.26, 388.26],
+    [348.26, 488.26],
+    [218.26, 378.26]
+]
 
 def cgsummary():
     with open('json/summary.json') as f:
@@ -82,8 +91,8 @@ def summary():
     pools_data = pools()
 
     total = data['SUMMARY'][0]['Accepted'] + data['SUMMARY'][0]['Rejected']
-    accepted_percent = data['SUMMARY'][0]['Accepted'] / total * 100
-    rejected_percent = data['SUMMARY'][0]['Rejected'] / total * 100
+    accepted_percent = int(data['SUMMARY'][0]['Accepted'] / total * 100)
+    rejected_percent = int(data['SUMMARY'][0]['Rejected'] / total * 100)
 
     response = {
         'status': 'success',
