@@ -3,6 +3,9 @@ import os
 import json
 import random
 from flask import Flask, render_template, jsonify
+from kit import LineChart
+
+line_chart = LineChart(7)
 
 app = Flask(__name__)
 app.debug = True
