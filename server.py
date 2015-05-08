@@ -2,24 +2,16 @@ from __future__ import division
 import os
 import json
 import random
+import time
 from flask import Flask, render_template, jsonify
 from kit import LineChart
 
 line_chart = LineChart(7)
 
+chart_asked = time.time() - 60 * 5 # as it was asked 5 minutes ago
+
 app = Flask(__name__)
 app.debug = True
-
-def random_line(size):
-    return [random.randrange(1, 100) for x in xrange(1, size + 1)]
-
-def random_lines(line_size):
-    lines = []
-
-    for i in xrange(1, random.randint(2, 4)):
-        lines.append(random_line(line_size))
-
-    return lines
 
 def cgsummary():
     with open('json/summary.json') as f:
@@ -121,9 +113,20 @@ def summary():
 
 @app.route('/chart.json')
 def chart():
+    global chart_asked # not cool python
+
+    now = time.time()
+
+    print now
+    print chart_asked
+
+    if (now - chart_asked) > 60 * 5:
+        line_chart.append([random.randint(200, 400), random.randint(200, 400)]);
+        chart_asked = now
+
     return jsonify({
         'status': 'success',
-        'lines': random_lines(7)
+        'lines': line_chart.lines()
     })
 
 if __name__ == '__main__':
