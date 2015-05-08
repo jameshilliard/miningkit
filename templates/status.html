@@ -184,7 +184,7 @@ $(document).ready(function() {
             $.get('/chart.json', function(data) {
                 chart.update(data.lines);
             });
-        }, 3000);
+        }, 60 * 1000);
     });
 });
 </script>
