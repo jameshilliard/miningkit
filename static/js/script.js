@@ -27,6 +27,9 @@ app.controller('DevicesController', function($scope, $http) {
     function update() {
         $http.get('/devices.json').success(function(data) {
             $scope.devices = data.devices;
+            if (data.devices.length < $scope.selectedTab + 1) {
+                $scope.selectedTab = 0;
+            }
         });
     }
 
