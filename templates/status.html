@@ -174,14 +174,14 @@
 {% block scripts %}
 <script>
 $(document).ready(function() {
-    $.get('/chart.js', function(data) {
+    $.get('/chart.json', function(data) {
         var chart = new MiningKitLineChart('lineChart', {
             labels: ['-30 min', '-25 min', '-20 min', '-15 min', '-10 min', '-5 min', 'Now'],
             lines: data.lines
         });
 
         setInterval(function() {
-            $.get('/chart.js', function(data) {
+            $.get('/chart.json', function(data) {
                 chart.update(data.lines);
             });
         }, 3000);

@@ -116,7 +116,7 @@ def summary():
 
     return jsonify(response)
 
-@app.route('/chart.js')
+@app.route('/chart.json')
 def chart():
     return jsonify({
         'status': 'success',
