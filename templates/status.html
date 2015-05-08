@@ -72,7 +72,7 @@
             <div role="tabpanel" class="tab-pane" id="device{[ $index ]}" ng-repeat="device in devices" ng-class="{active: selectedTab === $index}">
                 <div class="row">
                     <div class="col-lg-3">
-                        <div class="widget style1 navy-bg">
+                        <div class="widget style1" ng-class="{'navy-bg': device.ghs >= 400, 'yellow-bg': device.ghs < 400 && device.ghs >= 200, 'red-bg': device.ghs < 200}">
                             <div class="row">
                                 <div class="col-xs-4">
                                     <i class="fa fa-rocket fa-5x"></i>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="widget style1 navy-bg">
+                        <div class="widget style1" ng-class="{'navy-bg': device.temperature <= 90, 'yellow-bg': device.temperature > 90 && device.temperature <= 95, 'red-bg': device.temperature > 95}">
                             <div class="row">
                                 <div class="col-xs-4">
                                     <i class="fa fa-tachometer fa-5x"></i>
