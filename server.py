@@ -28,8 +28,7 @@ def pools():
         return json.load(f)
 
 def edevs():
-    with open('json/edevs.json') as f:
-        return json.load(f)
+    return cgminer.edevs()
 
 def estats():
     with open('json/estats.json') as f:
