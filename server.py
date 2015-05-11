@@ -17,15 +17,10 @@ app = Flask(__name__)
 app.debug = True
 
 def cgsummary():
-    summary = cgminer.summary()
-    if 'MHS 9s' in summary['SUMMARY'][0]:
-        summary['SUMMARY'][0]['MHS 5s'] = summary['SUMMARY'][0]['MHS 9s']
-
-    return summary
+    return cgminer.summary()
 
 def pools():
-    with open('json/pools.json') as f:
-        return json.load(f)
+    return cgminer.pools()
 
 def edevs():
     return cgminer.edevs()
@@ -76,8 +71,8 @@ def devices():
         response['devices'].append({
             'id': dev['ID'],
             'name': dev['Name'],
-            'mhs': dev['MHS 9s'],
-            'ghs': dev['MHS 9s'] / 1000,
+            'mhs': dev['MHS 5m'],
+            'ghs': dev['MHS 5m'] / 1000,
             'temperature': dev['Temperature'],
             'accepted': dev['Accepted'],
             'rejected': dev['Rejected'],
@@ -100,8 +95,8 @@ def summary():
     response = {
         'status': 'success',
         'summary': {
-            'mhs': data['SUMMARY'][0]['MHS 5s'],
-            'ghs': data['SUMMARY'][0]['MHS 5s'] / 1000,
+            'mhs': data['SUMMARY'][0]['MHS 5m'],
+            'ghs': data['SUMMARY'][0]['MHS 5m'] / 1000,
             'accepted': data['SUMMARY'][0]['Accepted'],
             'rejected': data['SUMMARY'][0]['Rejected'],
             'accepted_percent': accepted_percent,
