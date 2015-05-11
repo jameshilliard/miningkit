@@ -16,18 +16,6 @@ chart_asked = time.time() - 60 * 5 # as it was asked 5 minutes ago
 app = Flask(__name__)
 app.debug = True
 
-def cgsummary():
-    return cgminer.summary()
-
-def pools():
-    return cgminer.pools()
-
-def edevs():
-    return cgminer.edevs()
-
-def estats():
-    return cgminer.estats()
-
 @app.route('/')
 def status():
     return render_template('status.html')
@@ -64,7 +52,13 @@ def devices():
     except CgminerError as e:
         response = {
             'status': 'error',
-            'message': e.message,
+            'message': 'CgminerError: ' + e.message,
+            'devices': []
+        }
+    except Exception as e:
+        response = {
+            'status': 'error',
+            'message': 'Exception: ' + e.message,
             'devices': []
         }
 
@@ -82,8 +76,14 @@ def summary():
     except CgminerError as e:
         response = {
             'status': 'error',
-            'message': e.message,
+            'message': 'CgminerError: ' + e.message,
             'summary': {}
+        }
+    except Exception as e:
+        response = {
+            'status': 'error',
+            'message': 'Exception: ' + e.message,
+            'devices': []
         }
 
     return jsonify(response)
@@ -99,10 +99,16 @@ def chart():
         try:
             line_chart.append(cgminer.latest_hashrate_poins())
             chart_asked = now
+        except CgminerError as e:
+            return jsonify({
+                'status': 'error',
+                'message': 'CgminerError: ' + e.message,
+                'lines': []
+            })
         except Exception as e:
             return jsonify({
                 'status': 'error',
-                'message': e.message,
+                'message': 'Exception: ' + e.message,
                 'lines': []
             })
 
