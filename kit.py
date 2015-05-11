@@ -135,7 +135,6 @@ class Cgminer:
 
     def save(self, file_path):
         try:
-            print self.api.addpool('stratum+tcp://stratum.mining.eligius.st:3334,1LBkJ5CiCPYvdqKwkxKY9rG2UFUt1jui38,x')
             print self.api.save(file_path)
         except Exception as e:
             raise CgminerError('Problem with API save method: ' + e.message)

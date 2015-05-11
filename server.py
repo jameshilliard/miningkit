@@ -1,8 +1,11 @@
 from __future__ import division
 import os
 import time
+import json
 from flask import Flask, render_template, jsonify
 from kit import LineChart, Cgminer, CgminerError
+
+cgminer_config_path = os.path.dirname(os.path.realpath(__file__)) + '/config/cgminer'
 
 line_chart = LineChart(7)
 
@@ -17,12 +20,17 @@ def status():
 
 @app.route('/miner')
 def miner():
+    with open(cgminer_config_path, 'r') as f:
+        config = f.read()
+
+    return jsonify(config);
+
     return render_template('miner.html')
 
 @app.route('/update_pools', methods=['POST'])
 def update_pools():
     cgminer = Cgminer()
-    cgminer.save(os.path.dirname(os.path.realpath(__file__)) + '/config/cgminer')
+    cgminer.save(cgminer_config_path)
 
     return 'Hello world!'
 
