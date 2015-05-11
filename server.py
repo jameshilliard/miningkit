@@ -23,7 +23,7 @@ def miner():
     with open(cgminer_config_path, 'r') as f:
         config = f.read()
 
-    return jsonify(config);
+    return jsonify(json.loads(config))
 
     return render_template('miner.html')
 
