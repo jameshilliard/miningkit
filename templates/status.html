@@ -54,11 +54,7 @@
 </div>
 
 <div ng-controller="DevicesController">
-    <div class="jumbotron" ng-show="devices === null">
-        <p class="text-center">Searching for devices...</p>
-    </div>
-
-    <div class="jumbotron" ng-show="devices.length === 0">
+    <div class="jumbotron" ng-show="!devices.length">
         <p class="text-center">No devices were detected</p>
     </div>
 
