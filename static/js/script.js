@@ -6,6 +6,8 @@ app.config(['$interpolateProvider', function($interpolateProvider) {
 }]);
 
 app.controller('SummaryController', function($scope, $http) {
+    $scope.summary = null;
+
     function update() {
         $http.get('/summary.json').success(function(data) {
             $scope.summary = data.summary;
