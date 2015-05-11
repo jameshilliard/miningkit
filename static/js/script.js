@@ -6,7 +6,7 @@ app.config(['$interpolateProvider', function($interpolateProvider) {
 }]);
 
 app.controller('SummaryController', function($scope, $http) {
-    $scope.summary = null;
+    $scope.summary = {};
 
     function update() {
         $http.get('/summary.json').success(function(data) {
@@ -19,7 +19,7 @@ app.controller('SummaryController', function($scope, $http) {
 });
 
 app.controller('DevicesController', function($scope, $http) {
-    $scope.devices = null;
+    $scope.devices = [];
     $scope.selectedTab = 0;
 
     $scope.selectTab = function(index) {

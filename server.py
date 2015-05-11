@@ -72,28 +72,19 @@ def devices():
 
 @app.route('/summary.json')
 def summary():
-    data = cgsummary()
-    pools_data = pools()
+    cgminer = Cgminer()
 
-    total = data['SUMMARY'][0]['Accepted'] + data['SUMMARY'][0]['Rejected']
-    accepted_percent = int(data['SUMMARY'][0]['Accepted'] / total * 100)
-    rejected_percent = int(data['SUMMARY'][0]['Rejected'] / total * 100)
-
-    response = {
-        'status': 'success',
-        'summary': {
-            'mhs': data['SUMMARY'][0]['MHS 5m'],
-            'ghs': data['SUMMARY'][0]['MHS 5m'] / 1000,
-            'accepted': data['SUMMARY'][0]['Accepted'],
-            'rejected': data['SUMMARY'][0]['Rejected'],
-            'accepted_percent': accepted_percent,
-            'rejected_percent': rejected_percent,
-            'pool': {
-                'url': pools_data['POOLS'][0]['URL'],
-                'user': pools_data['POOLS'][0]['User']
-            }
+    try:
+        response = {
+            'status': 'success',
+            'summary': cgminer.summary()
         }
-    }
+    except CgminerError as e:
+        response = {
+            'status': 'error',
+            'message': e.message,
+            'summary': {}
+        }
 
     return jsonify(response)
 

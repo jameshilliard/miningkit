@@ -99,6 +99,40 @@ class Cgminer:
 
         return result
 
+    def summary():
+
+        try:
+            summary = self.api.summary()
+        except Exception as e:
+            raise CgminerError('Problem with API summary method: ' + e.message)
+
+        try:
+            pools = self.api.pools()
+        except Exception as e:
+            raise CgminerError('Problem with API pools method: ' + e.message)
+
+        try:
+            total = summary['SUMMARY'][0]['Accepted'] + summary['SUMMARY'][0]['Rejected']
+            accepted_percent = int(summary['SUMMARY'][0]['Accepted'] / total * 100)
+            rejected_percent = int(summary['SUMMARY'][0]['Rejected'] / total * 100)
+
+            result = {
+                'mhs': summary['SUMMARY'][0]['MHS 5m'],
+                'ghs': summary['SUMMARY'][0]['MHS 5m'] / 1000,
+                'accepted': summary['SUMMARY'][0]['Accepted'],
+                'rejected': summary['SUMMARY'][0]['Rejected'],
+                'accepted_percent': accepted_percent,
+                'rejected_percent': rejected_percent,
+                'pool': {
+                    'url': pools['POOLS'][0]['URL'],
+                    'user': pools['POOLS'][0]['User']
+                }
+            }
+        except Exception as e:
+            raise CgminerError('Problem with preparing data: ' + e.message)
+
+        return result
+
 if __name__ == '__main__':
     chart = LineChart(3)
     assert chart.lines() == [[0, 0, 0]]
