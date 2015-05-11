@@ -1,13 +1,8 @@
 from __future__ import division
 import os
-import json
-import random
 import time
 from flask import Flask, render_template, jsonify
-from pycgminer import CgminerAPI
 from kit import LineChart, Cgminer, CgminerError
-
-cgminer = CgminerAPI()
 
 line_chart = LineChart(7)
 
@@ -39,7 +34,6 @@ def log():
 
     return render_template('log.html', log=log)
 
-# json
 @app.route('/devices.json')
 def devices():
     cgminer = Cgminer()
