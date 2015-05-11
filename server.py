@@ -19,6 +19,13 @@ def status():
 def miner():
     return render_template('miner.html')
 
+@app.route('/update_pools', methods=['POST'])
+def update_pools():
+    cgminer = Cgminer()
+    cgminer.save(os.path.dirname(os.path.realpath(__file__)) + '/config')
+
+    return 'Hello world!'
+
 @app.route('/panel')
 def panel():
     return render_template('panel.html')

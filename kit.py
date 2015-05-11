@@ -133,6 +133,14 @@ class Cgminer:
 
         return result
 
+    def save(self, file_path):
+        try:
+            self.api.save(file_path)
+        except Exception as e:
+            raise CgminerError('Problem with API save method: ' + e.message)
+
+        return True
+
     def latest_hashrate_poins(self):
         points = []
 
