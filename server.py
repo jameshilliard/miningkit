@@ -22,7 +22,7 @@ def miner():
 @app.route('/update_pools', methods=['POST'])
 def update_pools():
     cgminer = Cgminer()
-    cgminer.save(os.path.dirname(os.path.realpath(__file__)) + '/config')
+    cgminer.save(os.path.dirname(os.path.realpath(__file__)) + '/config/cgminer')
 
     return 'Hello world!'
 
