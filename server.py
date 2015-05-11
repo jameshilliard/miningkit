@@ -5,7 +5,7 @@ import random
 import time
 from flask import Flask, render_template, jsonify
 from pycgminer import CgminerAPI
-from kit import LineChart
+from kit import LineChart, Cgminer, CgminerError
 
 cgminer = CgminerAPI()
 
@@ -54,32 +54,19 @@ def log():
 # json
 @app.route('/devices.json')
 def devices():
-    data = {
-        'edevs': edevs(),
-        'estats': estats()
-    }
+    cgminer = Cgminer()
 
-    response = {
-        'status': 'success',
-        'devices': []
-    }
-
-    for i in xrange(0, len(data['edevs']['DEVS'])):
-        dev = data['edevs']['DEVS'][i]
-        stat = data['estats']['STATS'][i]
-
-        response['devices'].append({
-            'id': dev['ID'],
-            'name': dev['Name'],
-            'mhs': dev['MHS 5m'],
-            'ghs': dev['MHS 5m'] / 1000,
-            'temperature': dev['Temperature'],
-            'accepted': dev['Accepted'],
-            'rejected': dev['Rejected'],
-            'clockrate': stat['base clockrate'],
-            'fan': stat['fan percent'],
-            'voltage': stat['Asic0 voltage 0']
-        })
+    try:
+        response = {
+            'status': 'success',
+            'devices': cgminer.devices()
+        }
+    except CgminerError as e:
+        response = {
+            'status': 'error',
+            'message': e.message,
+            'devices': []
+        }
 
     return jsonify(response)
 

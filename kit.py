@@ -1,3 +1,5 @@
+from pycgminer import CgminerAPI
+
 '''
 Helper to work with line chart
 
@@ -48,6 +50,54 @@ class LineChart:
             new_lines.append([0 for x in xrange(1, self._line_length + 1)])
 
         self._lines = new_lines
+
+'''
+Helper to work with cgminer api
+'''
+class CgminerError(Exception):
+    pass
+
+class Cgminer:
+
+    def __init__(self):
+        self.api = CgminerAPI()
+
+    def devices(self):
+        data = {}
+
+        try:
+            data['edevs']: self.api.edevs()
+        except Exception as e:
+            raise CgminerError('Problem with API edevs method: ' + e.message)
+
+        try:
+            data['estats']: self.api.estats()
+        except Exception as e:
+            raise CgminerError('Problem with API estats method: ' + e.message)
+
+        result = []
+
+        try:
+            for i in xrange(0, len(data['edevs']['DEVS'])):
+                dev = data['edevs']['DEVS'][i]
+                stat = data['estats']['STATS'][i]
+
+                result.append({
+                    'id': dev['ID'],
+                    'name': dev['Name'],
+                    'mhs': dev['MHS 5m'],
+                    'ghs': dev['MHS 5m'] / 1000,
+                    'temperature': dev['Temperature'],
+                    'accepted': dev['Accepted'],
+                    'rejected': dev['Rejected'],
+                    'clockrate': stat['base clockrate'],
+                    'fan': stat['fan percent'],
+                    'voltage': stat['Asic0 voltage 0']
+                })
+        except Exception as e:
+            raise CgminerError('Problem with devices data preparing: ' + e.message)
+
+        return result
 
 if __name__ == '__main__':
     chart = LineChart(3)
