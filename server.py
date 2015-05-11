@@ -17,7 +17,10 @@ app = Flask(__name__)
 app.debug = True
 
 def cgsummary():
-    print cgminer.summary()
+    summary = cgminer.summary()
+    if 'MHS 9s' in summary['SUMMARY'][0]:
+        summary['SUMMARY'][0]['MHS 5s'] = summary['SUMMARY'][0]['MHS 9s']
+
     return cgminer.summary()
 
 def pools():
