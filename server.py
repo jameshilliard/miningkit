@@ -91,21 +91,25 @@ def summary():
 @app.route('/chart.json')
 def chart():
     global chart_asked # not cool python
+    cgminer = Cgminer()
 
     now = time.time()
 
     if (now - chart_asked) > 60 * 5:
-        points = []
-        for edev in edevs()['DEVS']:
-            points.append(edev['MHS 5m'] / 1000)
+        try:
+            line_chart.append(cgminer.latest_hashrate_poins())
+            chart_asked = now
 
-        line_chart.append(points)
-        chart_asked = now
-
-    return jsonify({
-        'status': 'success',
-        'lines': line_chart.lines()
-    })
+            return jsonify({
+                'status': 'success',
+                'lines': line_chart.lines()
+            })
+        except Exception as e:
+            return jsonify({
+                'status': 'error',
+                'message': e.message,
+                'lines': []
+            })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

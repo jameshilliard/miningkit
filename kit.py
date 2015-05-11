@@ -133,6 +133,17 @@ class Cgminer:
 
         return result
 
+    def latest_hashrate_poins(self):
+        points = []
+
+        try:
+            for edev in self.api.edevs()['DEVS']:
+                points.append(edev['MHS 5m'] / 1000)
+        except Exception as e:
+            raise CgminerError('Problem with API edevs method: ' + e.message)
+
+        return points
+
 if __name__ == '__main__':
     chart = LineChart(3)
     assert chart.lines() == [[0, 0, 0]]
