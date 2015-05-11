@@ -116,9 +116,9 @@ class Cgminer:
             rejected_percent = int(summary['SUMMARY'][0]['Rejected'] / total * 100)
 
             print total
-            summary['SUMMARY'][0]['Accepted']
+            print summary['SUMMARY'][0]['Accepted']
             print accepted_percent
-            summary['SUMMARY'][0]['Rejected']
+            print summary['SUMMARY'][0]['Rejected']
             print rejected_percent
 
             result = {
