@@ -66,12 +66,12 @@ class Cgminer:
         data = {}
 
         try:
-            data['edevs']: self.api.edevs()
+            data['edevs'] = self.api.edevs()
         except Exception as e:
             raise CgminerError('Problem with API edevs method: ' + e.message)
 
         try:
-            data['estats']: self.api.estats()
+            data['estats'] = self.api.estats()
         except Exception as e:
             raise CgminerError('Problem with API estats method: ' + e.message)
 
