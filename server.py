@@ -17,6 +17,7 @@ app = Flask(__name__)
 app.debug = True
 
 def cgsummary():
+    print cgminer.summary()
     return cgminer.summary()
 
 def pools():
