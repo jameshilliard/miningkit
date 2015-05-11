@@ -31,8 +31,7 @@ def edevs():
     return cgminer.edevs()
 
 def estats():
-    with open('json/estats.json') as f:
-        return json.load(f)
+    return cgminer.estats()
 
 @app.route('/')
 def status():
