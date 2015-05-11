@@ -77,8 +77,8 @@ def devices():
         response['devices'].append({
             'id': dev['ID'],
             'name': dev['Name'],
-            'mhs': dev['MHS 5s'],
-            'ghs': dev['MHS 5s'] / 1000,
+            'mhs': dev['MHS 9s'],
+            'ghs': dev['MHS 9s'] / 1000,
             'temperature': dev['Temperature'],
             'accepted': dev['Accepted'],
             'rejected': dev['Rejected'],
