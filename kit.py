@@ -142,8 +142,6 @@ class Cgminer:
         except Exception as e:
             raise CgminerError('Problem with API edevs method: ' + e.message)
 
-        print points
-
         return points
 
 if __name__ == '__main__':

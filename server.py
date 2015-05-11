@@ -99,17 +99,17 @@ def chart():
         try:
             line_chart.append(cgminer.latest_hashrate_poins())
             chart_asked = now
-
-            return jsonify({
-                'status': 'success',
-                'lines': line_chart.lines()
-            })
         except Exception as e:
             return jsonify({
                 'status': 'error',
                 'message': e.message,
                 'lines': []
             })
+
+    return jsonify({
+        'status': 'success',
+        'lines': line_chart.lines()
+    })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
