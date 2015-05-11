@@ -99,7 +99,7 @@ class Cgminer:
 
         return result
 
-    def summary():
+    def summary(self):
 
         try:
             summary = self.api.summary()
