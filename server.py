@@ -117,7 +117,11 @@ def chart():
     now = time.time()
 
     if (now - chart_asked) > 60 * 5:
-        line_chart.append([random.randint(200, 400), random.randint(200, 400)]);
+        points = []
+        for edev in edevs()['DEVS']:
+            points.append(edev['MHS 5m'] / 1000)
+
+        line_chart.append(points)
         chart_asked = now
 
     return jsonify({
