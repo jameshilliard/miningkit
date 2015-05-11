@@ -21,7 +21,7 @@ def cgsummary():
     if 'MHS 9s' in summary['SUMMARY'][0]:
         summary['SUMMARY'][0]['MHS 5s'] = summary['SUMMARY'][0]['MHS 9s']
 
-    return cgminer.summary()
+    return summary
 
 def pools():
     with open('json/pools.json') as f:
