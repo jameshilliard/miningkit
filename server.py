@@ -4,7 +4,10 @@ import json
 import random
 import time
 from flask import Flask, render_template, jsonify
+from pycgminer import CgminerAPI
 from kit import LineChart
+
+cgminer = CgminerAPI()
 
 line_chart = LineChart(7)
 
@@ -14,8 +17,7 @@ app = Flask(__name__)
 app.debug = True
 
 def cgsummary():
-    with open('json/summary.json') as f:
-        return json.load(f)
+    return cgminer.summary()
 
 def pools():
     with open('json/pools.json') as f:
