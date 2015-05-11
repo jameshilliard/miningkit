@@ -100,7 +100,6 @@ class Cgminer:
         return result
 
     def summary(self):
-
         try:
             summary = self.api.summary()
         except Exception as e:
@@ -115,6 +114,10 @@ class Cgminer:
             total = summary['SUMMARY'][0]['Accepted'] + summary['SUMMARY'][0]['Rejected']
             accepted_percent = int(summary['SUMMARY'][0]['Accepted'] / total * 100)
             rejected_percent = int(summary['SUMMARY'][0]['Rejected'] / total * 100)
+
+            print total
+            print accepted_percent
+            print rejected_percent
 
             result = {
                 'mhs': summary['SUMMARY'][0]['MHS 5m'],
